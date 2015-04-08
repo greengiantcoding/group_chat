@@ -1,0 +1,32 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+#userList{
+	margin-left: 50px;
+	display: inline-block;
+	width: 100px;
+	height: 300px;
+	border: 1px solid black;
+}
+#chatboard{
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 auto;
+	width: 500px;
+	height: 300px;
+	border: 1px solid black;
+	overflow-y: scroll;
+}
+#message{
+	margin-left: 155px;
+	width: 500px;
+	height: 75px;
+	border: 1px solid black;
+}
+	#user_message{
+		width: 100%;
+	}
+	#theForm{
+		text-align: center;
+	}

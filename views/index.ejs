@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+	<title>Index</title>
+	<meta charset='utf-8'>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/index.css" />
+	<script type="text/javascript" src='/JQueryLib.js'></script>
+	<script type="text/javascript" src='/socket.io/socket.io.js'></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var socket = io.connect();
+			console.log(socket.id)
+			// var myName;
+			if(myName == null){
+				var myName = prompt("Please enter your name");
+				socket.emit("user_connected", myName);
+			};
+			socket.on('user_arrived', function(data){
+				var info = data;
+				console.log("user_arrived client side" + info);
+				$('#chatboard').append("<p>"+info+" has entered the chat room</p>");
+			})
+			$('#theForm').submit(function(data){
+				var message = $('#user_message').val();
+				console.log(message);
+				socket.emit("user_message", {'message':message, 'name':myName});
+				return false;
+			})
+			socket.on('message_received', function(data){
+				console.log("message received on client side" + data.name);
+				$('#chatboard').append("</p>"+data.name + ": " +data.message+"</p>");
+			})
+			socket.on('past_messages', function(data){
+				console.log(data);
+				for(x in data){
+					console.log(data[x].name);
+					$('#chatboard').append("</p>"+data[x].name+ ": " + data[x].message);
+				}
+			})
+			// $('#post_message').submit()
+			return false;
+		});
+	</script>
+</head>
+<body>
+	<h1>Chatroom</h1>
+	<div id="userList">
+	</div><!--userList-->
+	<div id="chatboard">
+	</div><!--chatboard-->
+	<div id='message'>
+		<form id='theForm'>
+			<input type='text' name='message' id='user_message'>
+			<input type='submit' id='post_btn'>
+		</form>
+	</div><!--message-->
+</body>
+</html>
